@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    .errore{
+        border:1px #f00 solid;
+    }
+    .testo{
+        text-decoration: underline;
+        color : #f00;
+    }
+</style>
+<script>
+    function controllo(){
+        let user = document.querySelector("#username");
+        if(user.value == ""){
+            user.className = "errore";
+            let tagFratello  = user.nextElementSibling.tagName;
+            if (tagFratello == "P") {
+                
+            }
+            else {
+                let pTag = document.createElement("p");
+            pTag.textContent = "errore, input campo vuoto";
+            pTag.className = "testo pippo pluto";
+            user.after(pTag);
+            }
+
+
+            
+           
+
+
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="invia.php" method="post" onsubmit="return controllo()">
+
+        <input type="text" name="user" id="username" placeholder="username">
+
+        <button type="submit">bottone</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nomefile</title>
+<style>
+    .errore{
+        border:1px #f00 solid;
+    }
+    .testo{
+        text-decoration: underline;
+        color : #f00;
+    }
+</style>
+<script>
+    function controllo(){
+        //username
+        let user = document.querySelector("#username");
+        let usercheck = /^[A-Za-z][a-zA-Z]*[.]?[a-zA-Z]+[@][a-zA-Z]{1,5}[.]+[a-zA-Z]{1,3}[a-zA-Z]$/;
+        let result = usercheck.test(user.value);
+        let flagUser = false;
+        let tagFratello = user.nextElementSibling;
+        if(result){ 
+            flagUser = true;  
+            user.classList.remove("errore");
+            if(tagFratello.tagName == "P"){
+                tagFratello.remove();
+            }
+        }
+        else{
+            user.className = "errore";
+           
+            if (tagFratello.tagName == "P") {
+                
+            }
+            else {
+            let pTag = document.createElement("p");
+            pTag.textContent = "errore, input campo vuoto";
+            pTag.className = "testo pippo pluto";
+            user.after(pTag);
+            }   
+        }
+        //comune
+        let comune = document.querySelector("#comune");
+        let flagComune = false;
+        let selectFratello = comune.nextElementSibling;
+        if(comune.value == "nullo"){
+            comune.className = "errore";
+            if (selectFratello.tagName == 'P'){
+                
+            }
+            else{
+            let pTag = document.createElement("p");
+            pTag.textContent = "errore campo comune";
+            pTag.className = "testo";
+            comune.after(pTag);
+            }
+            
+        }
+        else{
+            comune.classList.remove("errore");
+            flagComune = true;
+        }
+
+        //check flag
+        if(flagUser && flagComune){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+</script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="invia.php" method="post" onsubmit="return controllo()">
+
+        <input type="text" name="user" id="username" placeholder="username">
+        <select name="comune" id="comune" >
+            <option value="nullo">comune</option>
+            <option value="pescara">Pescara</option>
+            <option value="teramo">Teramo</option>
+            <option value="chieti">Chieti</option>
+        </select>
+
+        <button type="submit">bottone</button>
+    </form>
+</body>
+
+</html>
