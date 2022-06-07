@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nomefile</title>
+<style>
+    .errore{
+        border:1px #f00 solid;
+    }
+    .testo{
+        text-decoration: underline;
+        color : #f00;
+    }
+</style>
+<script>
+    function controllo(){
+        //username
+        let user = document.querySelector("#username");
+        let usercheck = /^[A-Za-z][a-zA-Z]*[.]?[a-zA-Z]+[@][a-zA-Z]{1,5}[.]+[a-zA-Z]{1,3}[a-zA-Z]$/;
+        let result = usercheck.test(user.value);
+        let flagUser = false;
+        let tagFratello = user.nextElementSibling;
+        if(result){ 
+            flagUser = true;  
+            user.classList.remove("errore");
+            if(tagFratello.tagName == "P"){
+                tagFratello.remove();
+            }
+        }
+        else{
+            user.className = "errore";
+            if (tagFratello.tagName == "P") {   
+            }
+            else {
+            flagUser = false;
+            let pTag = document.createElement("p");
+            pTag.textContent = "errore, input campo vuoto";
+            pTag.className = "testo pippo pluto";
+            user.after(pTag);
+            }   
+        }
+        //comune
+        let comune = document.querySelector("#comune");
+        let flagComune = false;
+        let selectFratello = comune.nextElementSibling;
+        if(comune.value == "nullo"){
+            comune.className = "errore";
+            if (selectFratello.tagName == "P"){
+            }
+            else{
+            let pTag = document.createElement("p");
+            pTag.textContent = "errore campo comune";
+            pTag.className = "testo";
+            comune.after(pTag);
+            }
+            
+        }
+        else{
+            comune.classList.remove("errore");
+            flagComune = true;
+            selectFratello.remove();
+            
+        }
+        console.log(selectFratello);
+        //sport
+        let flagSport = false;
+        let sport = document.querySelectorAll("#sport input:checked");
+        let idSport = document.querySelector("#sport");
+        /* for (let i of sport){
+            console.log(i.value);
+        } */
+        let sportValue  = [];
+        for (let i of sport){
+            sportValue.push(i.value);
+        }
+        let sportFratello = idSport.nextElementSibling;
+        if(sportValue.length >2){
+            if( sportFratello.id != "pluto"){
+                
+            let pTag = document.createElement("p");
+            pTag.className = "testo";
+            pTag.textContent = "errore max 2 scelte";
+            pTag.setAttribute("id","pluto");
+            idSport.after(pTag);
+            }
+        }
+        else {
+            if(sportFratello.id =="pluto"){
+                sportFratello.remove();
+            }
+            flagSport= true;
+        }
+        //genere
+        let flagGenere = false;
+        let genere = document.querySelector("#genere input:checked");
+        let idGenere = document.querySelector("#genere");
+        let figlioGenere = idGenere.lastElementChild;
+        if(genere == null){
+            if(figlioGenere.tagName != "P"){
+                let pTag = document.createElement("p");
+                pTag.className = "testo";
+                pTag.textContent ="errore genere";
+                idGenere.appendChild(pTag);
+            }
+        }
+        else{
+            if(figlioGenere.tagName =="P"){
+                figlioGenere.remove();
+            }
+            flagGenere = true;
+        }
+
+     //check flag
+        if(flagUser && flagComune && flagSport && flagGenere){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+</script>
+    
+</head>
+<body>
+    
+    <form action="invia.php" method="post" onsubmit="return controllo()">
+        <input type="text" name="user" id="username" placeholder="username">
+        <select name="comune" id="comune">
+            <option value="nullo">comune</option>
+            <option value="pescara">Pescara</option>
+            <option value="teramo">Teramo</option>
+            <option value="chieti">Chieti</option>
+        </select>
+    <div id="sport">
+        <input type="checkbox" name="calcio" value="calcio" id="calcio">
+        <label for="calcio">calcio</label>
+        <input type="checkbox" name="volley" value="volley" id="volley">
+        <label for="volley">volley</label>
+        <input type="checkbox" name="basket" value="basket" id="basket">
+        <label for="basket">basket</label>
+        <input type="checkbox" name="cricket" value="cricket" id="cricket">
+        <label for="cricket">cricket</label>
+    </div>
+    
+    <div id="genere">
+        <input type="radio" name="genere" value="m" id="m">
+        <label for="m">uomo</label>
+        <input type="radio" name="genere" value="f" id="f">
+        <label for="f">donna</label>
+    </div>
+
+        <button type="submit">bottone</button>
+    </form>
+</body>
+
+</html>
